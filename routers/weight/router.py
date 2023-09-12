@@ -5,9 +5,8 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
 from routers.weight.callback import WeightCallback
 from routers.weight.states import WeightState
-from routers.weight.helper import search_weight_number_in_text, delay
-from routers.weight.exceptions import NegativeAnswer, NegativeWeight, UnexpectedAnswer
 from routers.core import command_menu_handler
+from tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
 
 weight_router = Router(name="weight")
 
@@ -31,14 +30,15 @@ async def command_router(message: Message, state: FSMContext):
 async def set_weight_router(message: Message, state: FSMContext):
     response_text = ""
     try:
-        weight = await search_weight_number_in_text(message.text)
+        weight = await search_steps_number_in_text(message.text)
         await state.update_data(weight=weight)
         response_text = f"Спасибо, твой вес равен {weight} кг"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
         await delay(command_menu_handler(message), 1)
+        await state.clear()
         return
-    except NegativeWeight:
+    except NegativeNumber:
         response_text = 'Вес не может быть отрицательным, попробуй ещё раз'
     except NegativeAnswer:
         response_text = 'Спасибо, твой вес за сегодня не был измерен'
