@@ -1,8 +1,7 @@
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.postgresql import REAL, INTEGER, DATE
 from sqlalchemy import Table
-from db.sqlalchemy.mapper_registry import mapper_registry
-from db.sqlalchemy.metadata import metadata_obj
+from db.sqlalchemy.base import metadata_obj, mapper_registry
 from core.models.user_measurement import UserMeasurement
 
 
@@ -10,7 +9,7 @@ user_measurement = Table(
     "user_measurement",
     metadata_obj,
     Column("id", INTEGER, primary_key=True),
-    Column("user_id", INTEGER),
+    Column("user_id", INTEGER, ForeignKey("user.id")),
     Column("pass_date", DATE),
     Column("weight", REAL),
     Column("steps", INTEGER),

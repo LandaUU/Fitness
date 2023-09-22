@@ -1,10 +1,8 @@
 from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE
 from sqlalchemy import Table
-from db.sqlalchemy.metadata import metadata_obj
 from core.models.user import User
-from db.sqlalchemy.mapper_registry import mapper_registry
-
+from db.sqlalchemy.base import metadata_obj, mapper_registry
 
 user = Table(
     "user",

@@ -1,8 +1,7 @@
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE
 from sqlalchemy import Table
-from db.sqlalchemy.mapper_registry import mapper_registry
-from db.sqlalchemy.metadata import metadata_obj
+from db.sqlalchemy.base import metadata_obj, mapper_registry
 from core.models.food_diary import FoodDiary
 
 
