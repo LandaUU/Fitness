@@ -1,4 +1,4 @@
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE
 from sqlalchemy import Table
 from db.sqlalchemy.mapper_registry import mapper_registry
@@ -10,9 +10,9 @@ food_diary = Table(
     "food_diary",
     metadata_obj,
     Column("id", INTEGER, primary_key=True),
-    Column("food_id", INTEGER),
-    Column("user_id", INTEGER),
-    Column("meal_id", INTEGER),
+    Column("food_id", INTEGER, ForeignKey("food.id")),
+    Column("user_id", INTEGER, ForeignKey("user.id")),
+    Column("meal_id", INTEGER, ForeignKey("meal.id")),
     Column("diary_date", DATE),
     Column("amount", INTEGER),
     Column("metric_type", VARCHAR),

@@ -1,20 +1,19 @@
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER
 from sqlalchemy import Table
 from db.sqlalchemy.mapper_registry import mapper_registry
 from db.sqlalchemy.metadata import metadata_obj
-from core.models.food import Food
+from core.models.meal import Meal
 
 
-food = Table(
-    "food",
+meal = Table(
+    "meal",
     metadata_obj,
     Column("id", INTEGER, primary_key=True),
-    Column("name", VARCHAR),
-    Column("category_id", INTEGER, ForeignKey("food_category.id")),
+    Column("name", VARCHAR)
 )
 
 mapper_registry.map_imperatively(
-    Food,
-    food,
+    Meal,
+    meal,
 )

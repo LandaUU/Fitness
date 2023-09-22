@@ -16,5 +16,5 @@ metric_type = Table(
 
 mapper_registry.map_imperatively(
     MetricType,
-    mapper_registry,
+    metric_type,
 )
