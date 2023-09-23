@@ -3,12 +3,12 @@ import logging
 import sys
 
 
-from routers.core import dp
+from bot.routers.core import dp
 
 
 async def main() -> None:
-    from create_bot import bot
-    from routers.register import register_routers
+    from bot.create_bot import bot
+    from bot.routers.register import register_routers
     register_routers()
     await dp.start_polling(bot)
 

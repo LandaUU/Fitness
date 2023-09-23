@@ -1,8 +1,8 @@
 from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE
 from sqlalchemy import Table
-from core.models.user import User
-from db.sqlalchemy.base import metadata_obj, mapper_registry
+from app.core.models.user import User
+from app.db.sqlalchemy.base import metadata_obj, mapper_registry
 
 user = Table(
     "user",

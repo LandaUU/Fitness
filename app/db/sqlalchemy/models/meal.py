@@ -1,8 +1,8 @@
 from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER
 from sqlalchemy import Table
-from db.sqlalchemy.base import metadata_obj, mapper_registry
-from core.models.meal import Meal
+from app.db.sqlalchemy.base import metadata_obj, mapper_registry
+from app.core.models.meal import Meal
 
 
 meal = Table(

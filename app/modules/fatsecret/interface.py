@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from core.models.food_diary import FoodDiary
+from app.core.models.food_diary import FoodDiary
 
 from typing import Protocol, Tuple
 

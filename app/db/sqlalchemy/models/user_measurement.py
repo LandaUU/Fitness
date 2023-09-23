@@ -1,8 +1,8 @@
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.postgresql import REAL, INTEGER, DATE
 from sqlalchemy import Table
-from db.sqlalchemy.base import metadata_obj, mapper_registry
-from core.models.user_measurement import UserMeasurement
+from app.db.sqlalchemy.base import metadata_obj, mapper_registry
+from app.core.models.user_measurement import UserMeasurement
 
 
 user_measurement = Table(

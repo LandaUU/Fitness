@@ -1,8 +1,8 @@
 from sqlalchemy import Column
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER
 from sqlalchemy import Table
-from db.sqlalchemy.base import metadata_obj, mapper_registry
-from core.models.metric_type import MetricType
+from app.db.sqlalchemy.base import metadata_obj, mapper_registry
+from app.core.models.metric_type import MetricType
 
 
 metric_type = Table(

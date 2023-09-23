@@ -1,8 +1,8 @@
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.postgresql import VARCHAR, INTEGER
 from sqlalchemy import Table
-from db.sqlalchemy.base import metadata_obj, mapper_registry
-from core.models.food import Food
+from app.db.sqlalchemy.base import metadata_obj, mapper_registry
+from app.core.models.food import Food
 
 
 food = Table(

@@ -1,7 +1,7 @@
 from typing import Callable
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from core.models.user import User
+from app.core.models.user import User
 
 
 class UserRepository:
