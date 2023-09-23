@@ -14,6 +14,8 @@ class User:
     age: int
     birthday: date
     gender: str
+    telegram_id: int
+    telegram_username: str
     pay_date: date
     next_report_date: date
     exit_date: date
