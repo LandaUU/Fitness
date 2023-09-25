@@ -1,4 +1,3 @@
-
 from aiogram import Dispatcher
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
@@ -9,6 +8,8 @@ from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
 from bot.routers.measurements.callback import MeasureCallback
 from bot.routers.fatsecret_reports.callback import FsReportCallback
+from bot.routers.user.callback import UserCreateCallback
+
 dp = Dispatcher()
 
 
@@ -17,7 +18,17 @@ async def command_start_handler(message: Message) -> None:
     """
     This handler receives messages with `/start` command
     """
-    await message.answer(f"Hello, {hbold(message.from_user.full_name)}!")
+    response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Заполнить анкету",
+                              callback_data=UserCreateCallback(is_first_report=True, final=False).pack())],
+    ])
+    await message.answer("Привет! Я чат-бот [придумай название], буду твоим помощников на пути к стройности и" +
+                         " здоровью. " +
+                         "\nКогда начнем работу, тебе нужно будет каждый день отправлять отчеты о своем прогрессе, " +
+                         "без них у нас ничего не выйдет. \nЕсли у тебя есть вопросы, можешь посмотреть видео,"
+                         + " там более подробно о том, " +
+                         "как взаимодействовать со мной. \n\nКак будешь готов(а)," +
+                         f" нажми кнопку '{hbold('Заполнить анкету')}'", reply_markup=response_keyboard)
 
 
 @dp.message(Command("menu"))

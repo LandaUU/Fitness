@@ -1,24 +1,24 @@
-
 from dataclasses import dataclass
 from datetime import date
+from typing import Optional
 
 
 @dataclass
 class User:
-    id: int
     fio: str
-    lastname: str
-    middlename: str
-    firstname: str
     height: float
     age: int
-    birthday: date
     gender: str
-    telegram_id: int
-    telegram_username: str
-    pay_date: date
-    next_report_date: date
-    exit_date: date
-    oauth_token: str
-    oauth_secret: str
-    oauth_date: date
+    id: Optional[int] = None
+    lastname: Optional[str] = None
+    middlename: Optional[str] = None
+    firstname: Optional[str] = None
+    birthday: Optional[date] = None
+    telegram_id: Optional[int] = None
+    telegram_username: Optional[str] = None
+    pay_date: Optional[date] = None
+    next_report_date: Optional[date] = None
+    exit_date: Optional[date] = None
+    oauth_token: Optional[str] = None
+    oauth_secret: Optional[str] = None
+    oauth_date: Optional[date] = None
