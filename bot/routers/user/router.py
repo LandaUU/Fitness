@@ -6,7 +6,9 @@ from bot.routers.user.callback import UserCreateCallback
 from bot.routers.user.states import UserCreateState
 from bot.tools import search_steps_number_in_text, NegativeNumber, NegativeAnswer, UnexpectedAnswer
 from app.core.models.user import User
-from app.db.sqlalchemy.repositories import user_repository
+from app.db.sqlalchemy.models.user import user
+from app.db.sqlalchemy.base import async_session
+from app.db.sqlalchemy.repositories.user_repository import UserRepository
 
 user_router = Router(name="user")
 
@@ -100,8 +102,12 @@ async def check_user_report(message: Message, state: FSMContext):
 @user_router.callback_query(UserCreateCallback.filter(F.final == True))
 async def save_user_report(query: CallbackQuery, callback_data: UserCreateCallback, state: FSMContext):
     user_dict = await state.get_data()
-    user = User(**user_dict)
-    print(user)
+
+    new_user = User(**user_dict)
+
+    repository = UserRepository(session=async_session)
+
+    await repository.create_user(new_user)
 
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text='Сохранено!')

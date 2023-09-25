@@ -27,6 +27,6 @@ user = Table(
 )
 
 mapper_registry.map_imperatively(
-    User,
-    user,
+    class_=User,
+    local_table=user
 )

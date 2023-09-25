@@ -1,17 +1,20 @@
 from typing import Callable
-from sqlalchemy.orm import Session
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
 from app.core.models.user import User
 
 
 class UserRepository:
-    def __init__(self, session: Session) -> None:
+    def __init__(self, session: async_sessionmaker[AsyncSession]) -> None:
         self._session = session
 
-    def create_user(self, user: User) -> None:
-        self._session.merge(user)
-        self._session.commit()
+    async def create_user(self, user: User) -> None:
+        async with self._session() as session:
+            await session.merge(user)
+            await session.commit()
 
-    def get_user(self, predicate: Callable) -> User:
-        statement = select(User).where(predicate)
-        return self._session.execute(statement).scalar_one()
+    async def get_user(self, predicate: Callable) -> User:
+        async with self._session() as session:
+            statement = select(User).where(predicate)
+            return (await session.execute(statement)).scalar_one()
