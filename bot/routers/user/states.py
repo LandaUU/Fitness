@@ -12,7 +12,6 @@ class UserCreateState(StatesGroup):
     gender = State()
     oauth_token = State()
     oauth_secret = State()
-    data_report = State()
 
     def get_user_data(self):
         return 'ФИО: {}\nВозраст:{}\nРост:{}\nПол: {}'.format(self.fio, self.age, self.height, self.gender)

@@ -8,7 +8,7 @@ from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
 from bot.routers.measurements.callback import MeasureCallback
 from bot.routers.fatsecret_reports.callback import FsReportCallback
-from bot.routers.user.callback import UserCreateCallback
+from bot.routers.user.callback import UserCreateCallback, UserCreateAction
 
 dp = Dispatcher()
 
@@ -20,7 +20,7 @@ async def command_start_handler(message: Message) -> None:
     """
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Заполнить анкету",
-                              callback_data=UserCreateCallback(is_first_report=True, final=False).pack())],
+                              callback_data=UserCreateCallback(action=UserCreateAction.begin).pack())],
     ])
     await message.answer("Привет! Я чат-бот [придумай название], буду твоим помощников на пути к стройности и" +
                          " здоровью. " +

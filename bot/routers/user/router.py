@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from bot.routers.user.callback import UserCreateCallback
+from bot.routers.user.callback import UserCreateCallback, UserCreateAction
 from bot.routers.user.states import UserCreateState
 from bot.tools import search_steps_number_in_text, NegativeNumber, NegativeAnswer, UnexpectedAnswer
 from app.core.models.user import User
@@ -13,7 +13,7 @@ from app.db.sqlalchemy.repositories.user_repository import UserRepository
 user_router = Router(name="user")
 
 
-@user_router.callback_query(UserCreateCallback.filter(F.final == False))
+@user_router.callback_query(UserCreateCallback.filter(F.action == UserCreateAction.begin))
 async def callback_router(query: CallbackQuery, callback_data: UserCreateCallback, state: FSMContext):
     if callback_data.is_first_report:
         await query.bot.send_message(chat_id=query.message.chat.id,
@@ -91,19 +91,22 @@ async def fill_user_gender(message: Message, state: FSMContext):
 async def check_user_report(message: Message, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Да",
-                              callback_data=UserCreateCallback(is_first_report=True, final=True).pack())],
+                              callback_data=UserCreateCallback(action=UserCreateAction.save).pack())],
         [InlineKeyboardButton(text="Нет",
-                              callback_data=UserCreateCallback(is_first_report=True, final=False).pack())]])
+                              callback_data=UserCreateCallback(action=UserCreateAction.begin).pack())]])
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Всё верно?',
                                    reply_markup=response_keyboard)
 
 
-@user_router.callback_query(UserCreateCallback.filter(F.final == True))
+@user_router.callback_query(UserCreateCallback.filter(F.action == UserCreateAction.save))
 async def save_user_report(query: CallbackQuery, callback_data: UserCreateCallback, state: FSMContext):
     user_dict = await state.get_data()
 
     new_user = User(**user_dict)
+
+    new_user.telegram_id = query.from_user.id
+    new_user.telegram_username = query.from_user.username
 
     repository = UserRepository(session=async_session)
 
