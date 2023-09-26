@@ -9,7 +9,7 @@ class UserRepository:
     def __init__(self, session: async_sessionmaker[AsyncSession]) -> None:
         self._session = session
 
-    async def create_user(self, user: User) -> None:
+    async def save(self, user: User) -> None:
         async with self._session() as session:
             await session.merge(user)
             await session.commit()

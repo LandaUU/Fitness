@@ -11,7 +11,7 @@ async def main() -> None:
     from bot.routers.register import register_routers
     register_routers()
     await create_all_tables()
-    sqlalchemy.orm.configure_mappers()
+    await sqlalchemy.orm.configure_mappers()
     await dp.start_polling(bot)
 
 

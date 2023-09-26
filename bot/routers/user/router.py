@@ -3,10 +3,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 from bot.routers.user.callback import UserCreateCallback, UserCreateAction
-from bot.routers.user.states import UserCreateState
+from bot.routers.user.states import UserState, UserScenarioState
 from bot.tools import search_steps_number_in_text, NegativeNumber, NegativeAnswer, UnexpectedAnswer
+from bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, FatSecretUserSyncAction
 from app.core.models.user import User
-from app.db.sqlalchemy.models.user import user
 from app.db.sqlalchemy.base import async_session
 from app.db.sqlalchemy.repositories.user_repository import UserRepository
 
@@ -15,26 +15,26 @@ user_router = Router(name="user")
 
 @user_router.callback_query(UserCreateCallback.filter(F.action == UserCreateAction.begin))
 async def callback_router(query: CallbackQuery, callback_data: UserCreateCallback, state: FSMContext):
-    if callback_data.is_first_report:
+    if callback_data.action == UserCreateAction.begin:
         await query.bot.send_message(chat_id=query.message.chat.id,
                                      text='Давай начнем!')
 
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text='Напиши своё ФИО:')
-    await state.set_state(UserCreateState.fio)
+    await state.set_state(UserState.fio)
     await query.answer()
 
 
-@user_router.message(UserCreateState.fio)
+@user_router.message(UserState.fio)
 async def fill_user_fio(message: Message, state: FSMContext):
     fio = message.text
     await state.update_data(fio=fio)
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Сколько тебе полных лет?')
-    await state.set_state(UserCreateState.age)
+    await state.set_state(UserState.age)
 
 
-@user_router.message(UserCreateState.age)
+@user_router.message(UserState.age)
 async def fill_user_age(message: Message, state: FSMContext):
     try:
         age = await search_steps_number_in_text(message.text)
@@ -42,7 +42,7 @@ async def fill_user_age(message: Message, state: FSMContext):
         response_text = f"Твой рост?"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
-        await state.set_state(UserCreateState.height)
+        await state.set_state(UserState.height)
         return
     except NegativeNumber:
         response_text = 'Возраст не может быть отрицательным, попробуй ещё раз'
@@ -53,7 +53,7 @@ async def fill_user_age(message: Message, state: FSMContext):
                                    text=response_text)
 
 
-@user_router.message(UserCreateState.height)
+@user_router.message(UserState.height)
 async def fill_user_height(message: Message, state: FSMContext):
     try:
         height = await search_steps_number_in_text(message.text)
@@ -61,7 +61,7 @@ async def fill_user_height(message: Message, state: FSMContext):
         response_text = f"Давай теперь напиши свой пол, М или Ж?"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
-        await state.set_state(UserCreateState.gender)
+        await state.set_state(UserState.gender)
         return
     except NegativeNumber:
         response_text = 'Вес не может быть отрицательным, попробуй ещё раз'
@@ -74,7 +74,7 @@ async def fill_user_height(message: Message, state: FSMContext):
                                    text=response_text)
 
 
-@user_router.message(UserCreateState.gender)
+@user_router.message(UserState.gender)
 async def fill_user_gender(message: Message, state: FSMContext):
     gender = message.text
     await state.update_data(gender=gender)
@@ -82,12 +82,12 @@ async def fill_user_gender(message: Message, state: FSMContext):
                                    text='Хорошо!')
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Давай теперь проверим твои данные:')
-    await state.set_state(UserCreateState.data_report)
+    await state.set_state(UserScenarioState.check)
     await message.bot.send_message(chat_id=message.chat.id,
                                    text=str(await state.get_data()))
 
 
-@user_router.message(UserCreateState.data_report)
+@user_router.message(UserScenarioState.check)
 async def check_user_report(message: Message, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Да",
@@ -110,7 +110,14 @@ async def save_user_report(query: CallbackQuery, callback_data: UserCreateCallba
 
     repository = UserRepository(session=async_session)
 
-    await repository.create_user(new_user)
+    response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Привязать трекер еды",
+                              callback_data=FatSecretUserSyncCallback(action=FatSecretUserSyncAction.begin).pack())]])
+
+    await repository.save(new_user)
 
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text='Сохранено!')
+    await query.bot.send_message(chat_id=query.message.chat.id,
+                                 text='Давай перейдем к следующему этапу и синхронизируем фатсикрет с ботом',
+                                 reply_markup=response_keyboard)
