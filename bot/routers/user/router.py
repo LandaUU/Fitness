@@ -80,15 +80,15 @@ async def fill_user_gender(message: Message, state: FSMContext):
     await state.update_data(gender=gender)
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Хорошо!')
-    await message.bot.send_message(chat_id=message.chat.id,
-                                   text='Давай теперь проверим твои данные:')
     await state.set_state(UserScenarioState.check)
-    await message.bot.send_message(chat_id=message.chat.id,
-                                   text=str(await state.get_data()))
 
 
 @user_router.message(UserScenarioState.check)
 async def check_user_report(message: Message, state: FSMContext):
+    await message.bot.send_message(chat_id=message.chat.id,
+                                   text='Давай теперь проверим твои данные:')
+    await message.bot.send_message(chat_id=message.chat.id,
+                                   text=str(await state.get_data()))
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Да",
                               callback_data=UserCreateCallback(action=UserCreateAction.save).pack())],

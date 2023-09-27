@@ -7,7 +7,8 @@ from bot.create_bot import bot
 from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
 from bot.routers.measurements.callback import MeasureCallback
-from bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback
+from bot.routers.fatsecret_reports.callback import FatSecretLoadFoodDiary, \
+    FatSecretLoadFoodDiaryAction
 from bot.routers.user.callback import UserCreateCallback, UserCreateAction
 
 dp = Dispatcher()
@@ -44,6 +45,5 @@ async def command_menu_handler(message: Message) -> None:
                               callback_data=MeasureCallback(chat_id=message.chat.id,
                                                             user_id=message.from_user.id).pack())],
         [InlineKeyboardButton(text="Как ты сегодня кушал? (отчет)",
-                              callback_data=FatSecretUserSyncCallback(chat_id=message.chat.id,
-                                                                      user_id=message.from_user.id).pack())]])
+                              callback_data=FatSecretLoadFoodDiary(action=FatSecretLoadFoodDiaryAction.send).pack())]])
     await bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=response_keyboard)

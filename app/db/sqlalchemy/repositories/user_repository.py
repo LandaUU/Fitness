@@ -16,5 +16,5 @@ class UserRepository:
 
     async def get_user(self, predicate: Callable) -> User:
         async with self._session() as session:
-            statement = select(User).where(predicate)
-            return (await session.execute(statement)).scalar_one()
+            statement = select(User).where(predicate(User))
+            return (await session.execute(statement)).scalar()

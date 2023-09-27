@@ -1,6 +1,5 @@
 import os
 
-import sqlalchemy.orm
 from sqlalchemy import MetaData
 from sqlalchemy.orm import registry, DeclarativeBase
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncEngine
@@ -17,8 +16,10 @@ Base: DeclarativeBase = mapper_registry.generate_base()
 async_session = async_sessionmaker(app_engine, expire_on_commit=False)
 
 
-async def create_all_tables(engine: AsyncEngine = app_engine):
+async def create_all_tables(engine: AsyncEngine, db_registry: registry) -> None:
+    import app.db.sqlalchemy.models
+    base = db_registry.generate_base()
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+    #     print(await conn.run_sync(base.metadata.drop_all))
+        print(await conn.run_sync(base.metadata.create_all))
         print('all tables created')

@@ -11,5 +11,15 @@ class FatSecretUserSyncAction(StrEnum):
     clear = auto()
 
 
+class FatSecretLoadFoodDiaryAction(StrEnum):
+    begin = auto()
+    send = auto()
+    save = auto()
+
+
 class FatSecretUserSyncCallback(CallbackData, prefix="fatsecret"):
     action: FatSecretUserSyncAction
+
+
+class FatSecretLoadFoodDiary(CallbackData, prefix="fatsecret_diary"):
+    action: FatSecretLoadFoodDiaryAction

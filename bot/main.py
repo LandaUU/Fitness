@@ -5,13 +5,15 @@ import sqlalchemy.orm
 
 from bot.routers.core import dp
 from app.db.sqlalchemy.base import create_all_tables
+from app.db.sqlalchemy.base import app_engine, mapper_registry
+from bot.create_bot import bot
+from bot.routers.register import register_routers
+
 
 async def main() -> None:
-    from bot.create_bot import bot
-    from bot.routers.register import register_routers
     register_routers()
-    await create_all_tables()
-    await sqlalchemy.orm.configure_mappers()
+    await create_all_tables(app_engine, mapper_registry)
+    sqlalchemy.orm.configure_mappers()
     await dp.start_polling(bot)
 
 
