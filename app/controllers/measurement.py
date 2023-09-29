@@ -13,7 +13,7 @@ async def _get_user(telegram_id: int) -> User:
 
 
 async def save_measurements(telegram_id: int, **kwargs):
-    user = _get_user(telegram_id)
+    user = await _get_user(telegram_id)
 
     measurements_rep = MeasurementRepository(session=async_session)
     measurement = await measurements_rep.get_measurement(
