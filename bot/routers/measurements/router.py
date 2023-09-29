@@ -103,7 +103,7 @@ async def set_stomach_size(message: Message, state: FSMContext):
 async def set_hips_size(message: Message, state: FSMContext):
     try:
         hips_size = int(await search_steps_number_in_text(message.text))
-        await state.update_data(Stomach=hips_size)
+        await state.update_data(Hips=hips_size)
         await state.set_state(MeasureState.Hip)
         response_text = f"Твой охват бедер равен {hips_size} см, едем дальше. Напиши охват бедра в см:"
         await message.bot.send_message(chat_id=message.chat.id,
