@@ -23,7 +23,7 @@ async def save_measurements(telegram_id: int, **kwargs):
     if not measurement:
         measurement = UserMeasurement(user_id=user.id, pass_date=datetime.now().date(), **kwargs)
     else:
-        for key, value in kwargs:
+        for key, value in kwargs.items():
             setattr(measurement, key.lower(), value)
 
     await measurements_rep.save(measurement)
