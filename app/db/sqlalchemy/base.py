@@ -20,6 +20,6 @@ async def create_all_tables(engine: AsyncEngine, db_registry: registry) -> None:
     import app.db.sqlalchemy.models
     base = db_registry.generate_base()
     async with engine.begin() as conn:
-    #     print(await conn.run_sync(base.metadata.drop_all))
+        # print(await conn.run_sync(base.metadata.drop_all))
         print(await conn.run_sync(base.metadata.create_all))
         print('all tables created')

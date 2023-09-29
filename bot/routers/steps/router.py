@@ -7,6 +7,7 @@ from bot.routers.core import command_menu_handler
 from bot.routers.steps.callback import StepsCallback
 from bot.routers.steps.state import StepsState
 from bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
+from app.controllers.measurement import save_measurements
 
 steps_router = Router(name="steps")
 
@@ -28,13 +29,13 @@ async def command_router(message: Message, state: FSMContext):
 
 @steps_router.message(StepsState.steps)
 async def set_steps_router(message: Message, state: FSMContext):
-    response_text = ""
     try:
         steps = int(await search_steps_number_in_text(message.text))
         await state.update_data(steps=steps)
         response_text = f"Спасибо, ты прошёл за сегодня {steps} шагов"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
+        await save_measurements(message.from_user.id, steps=steps)
         await delay(command_menu_handler(message), 1)
         await state.clear()
         return

@@ -7,6 +7,7 @@ from bot.routers.weight.callback import WeightCallback
 from bot.routers.weight.states import WeightState
 from bot.routers.core import command_menu_handler
 from bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
+from app.controllers.measurement import save_measurements
 
 weight_router = Router(name="weight")
 
@@ -28,13 +29,13 @@ async def command_router(message: Message, state: FSMContext):
 
 @weight_router.message(WeightState.weight)
 async def set_weight_router(message: Message, state: FSMContext):
-    response_text = ""
     try:
         weight = await search_steps_number_in_text(message.text)
         await state.update_data(weight=weight)
         response_text = f"Спасибо, твой вес равен {weight} кг"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
+        await save_measurements(message.from_user.id, weight=weight)
         await delay(command_menu_handler(message), 1)
         await state.clear()
         return

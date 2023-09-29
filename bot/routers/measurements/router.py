@@ -7,6 +7,7 @@ from bot.routers.core import command_menu_handler
 from bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
 from bot.routers.measurements.callback import MeasureCallback
 from bot.routers.measurements.state import MeasureState
+from app.controllers.measurement import save_measurements
 
 measure_router = Router(name="measure")
 
@@ -28,7 +29,6 @@ async def command_router(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Neck)
 async def set_neck_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         neck_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Neck=neck_size)
@@ -53,7 +53,6 @@ async def set_neck_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Waist)
 async def set_waist_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         waist_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Waist=waist_size)
@@ -78,7 +77,6 @@ async def set_waist_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Stomach)
 async def set_stomach_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         stomach_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Stomach=stomach_size)
@@ -103,7 +101,6 @@ async def set_stomach_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Hips)
 async def set_hips_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         hips_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Stomach=hips_size)
@@ -128,7 +125,6 @@ async def set_hips_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Hip)
 async def set_hip_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         hip_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Hip=hip_size)
@@ -153,7 +149,6 @@ async def set_hip_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Shin)
 async def set_shin_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         shin_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Shin=shin_size)
@@ -178,7 +173,6 @@ async def set_shin_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Chest)
 async def set_chest_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         chest_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Chest=chest_size)
@@ -203,19 +197,18 @@ async def set_chest_size(message: Message, state: FSMContext):
 
 @measure_router.message(MeasureState.Biceps)
 async def set_biceps_size(message: Message, state: FSMContext):
-    response_text = ""
     try:
         biceps_size = int(await search_steps_number_in_text(message.text))
         await state.update_data(Biceps=biceps_size)
-        await state.set_state(MeasureState.Hips)
         response_text = f"Твой охват бицепса равен {biceps_size} см, смотри что получилось:"
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=response_text)
         measure_template_text = 'Шея - {}\nТалия - {}\n' + \
-            'Живот - {}\nБедра - {}\nБедро - {}\nГолень - {}\nГрудь - {}\nБицепс - {}'
+                                'Живот - {}\nБедра - {}\nБедро - {}\nГолень - {}\nГрудь - {}\nБицепс - {}'
         values = list((await state.get_data()).values()) + [biceps_size]
         await message.bot.send_message(chat_id=message.chat.id,
                                        text=measure_template_text.format(*values))
+        await save_measurements(message.from_user.id, **(await state.get_data()))
         await delay(command_menu_handler(message), 1)
         await state.clear()
         return

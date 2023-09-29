@@ -81,10 +81,6 @@ async def fill_user_gender(message: Message, state: FSMContext):
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Хорошо!')
     await state.set_state(UserScenarioState.check)
-
-
-@user_router.message(UserScenarioState.check)
-async def check_user_report(message: Message, state: FSMContext):
     await message.bot.send_message(chat_id=message.chat.id,
                                    text='Давай теперь проверим твои данные:')
     await message.bot.send_message(chat_id=message.chat.id,
@@ -115,7 +111,7 @@ async def save_user_report(query: CallbackQuery, callback_data: UserCreateCallba
                               callback_data=FatSecretUserSyncCallback(action=FatSecretUserSyncAction.begin).pack())]])
 
     await repository.save(new_user)
-
+    await state.clear()
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text='Сохранено!')
     await query.bot.send_message(chat_id=query.message.chat.id,
