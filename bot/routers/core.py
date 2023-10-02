@@ -2,7 +2,7 @@ from aiogram import Dispatcher
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from bot.create_bot import bot
 from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
@@ -10,6 +10,7 @@ from bot.routers.measurements.callback import MeasureCallback
 from bot.routers.fatsecret_reports.callback import FatSecretLoadFoodDiary, \
     FatSecretLoadFoodDiaryAction
 from bot.routers.user.callback import UserCreateCallback, UserCreateAction
+from bot.routers.reports.callback import ReportAction, ReportCallback
 
 dp = Dispatcher()
 
@@ -45,5 +46,7 @@ async def command_menu_handler(message: Message) -> None:
                               callback_data=MeasureCallback(chat_id=message.chat.id,
                                                             user_id=message.from_user.id).pack())],
         [InlineKeyboardButton(text="Как ты сегодня кушал? (отчет)",
-                              callback_data=FatSecretLoadFoodDiary(action=FatSecretLoadFoodDiaryAction.send).pack())]])
+                              callback_data=FatSecretLoadFoodDiary(action=FatSecretLoadFoodDiaryAction.send).pack())],
+        [InlineKeyboardButton(text="Открыть отчет за сегодня",
+                              callback_data=ReportCallback(action=ReportAction.open_webapp).pack())]])
     await bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=response_keyboard)

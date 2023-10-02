@@ -5,6 +5,7 @@ from bot.routers.steps.router import steps_router
 from bot.routers.measurements.router import measure_router
 from bot.routers.fatsecret_reports.router import fatsecret_router
 from bot.routers.user.router import user_router
+from bot.routers.reports.router import reports
 
 
 def register_routers():
@@ -13,3 +14,4 @@ def register_routers():
     dp.include_router(measure_router)
     dp.include_router(fatsecret_router)
     dp.include_router(user_router)
+    dp.include_router(reports)

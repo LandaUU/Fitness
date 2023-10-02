@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey
-from sqlalchemy.dialects.postgresql import VARCHAR, REAL, BIGINT, DATE, INTEGER
+from sqlalchemy.dialects.postgresql import REAL, BIGINT, DATE, INTEGER
 from sqlalchemy import Table
 from app.db.sqlalchemy.base import metadata_obj, mapper_registry
 from app.core.models.food_diary import FoodDiary
@@ -14,7 +14,7 @@ food_diary = Table(
     Column("meal_id", BIGINT, ForeignKey("meal.id")),
     Column("diary_date", DATE),
     Column("amount", INTEGER),
-    Column("metric_type", VARCHAR),
+    Column("metric_type", INTEGER),
     Column("calories", REAL),
     Column("protein", REAL),
     Column("fat", REAL),

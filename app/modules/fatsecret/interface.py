@@ -9,7 +9,7 @@ class IClient(Protocol):
         pass
 
     @abstractmethod
-    def get_user_report(self, user, diary_date) -> FoodDiary:
+    def get_user_report(self, user, diary_date) -> list[FoodDiary]:
         raise NotImplementedError()
 
     @abstractmethod
@@ -21,5 +21,5 @@ class IClient(Protocol):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_food_details(self) -> dict:
+    def get_food_details(self, food_id) -> dict:
         raise NotImplementedError()

@@ -11,6 +11,7 @@ from bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, Fa
 from bot.routers.fatsecret_reports.states import FsReportState
 from app.modules.fatsecret.client import fatsecret_client
 from app.db.sqlalchemy.repositories.user_repository import UserRepository
+from app.controllers.fatsecret_reports import save_user_report
 
 fatsecret_router = Router(name="fatsecret")
 
@@ -22,7 +23,7 @@ async def callback_router(query: CallbackQuery, callback_data: CallbackData, sta
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text=f"Ссылка для синхронизации аккаунта: {auth_url}")
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text=f"Введи код:")
+                                 text="Введи код:")
     await query.answer()
 
 
@@ -46,7 +47,7 @@ async def get_user_pin_code(message: Message, state: FSMContext):
 
 
 @fatsecret_router.callback_query(FatSecretLoadFoodDiary.filter(F.action == FatSecretLoadFoodDiaryAction.begin))
-async def get_food_diary_callback(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
+async def get_food_diary_callback_begin(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Отправить отчёт",
                               callback_data=FatSecretUserSyncCallback(action=FatSecretUserSyncAction.begin).pack())]])
@@ -57,14 +58,15 @@ async def get_food_diary_callback(query: CallbackQuery, callback_data: CallbackD
 
 
 @fatsecret_router.callback_query(FatSecretLoadFoodDiary.filter(F.action == FatSecretLoadFoodDiaryAction.send))
-async def get_food_diary_callback(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
+async def get_food_diary_callback_send(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     repository = UserRepository(session=async_session)
     stored_user = await repository.get_user(lambda user: user.telegram_id == query.from_user.id)
     if stored_user is None:
         await query.bot.send_message(chat_id=query.message.chat.id,
                                      text='Вы не зарегистрированы, введите `/start` для начала работы')
 
-    report = fatsecret_client.get_user_report((stored_user.oauth_token, stored_user.oauth_secret),
-                                              datetime.now())
+    await save_user_report(user=stored_user, diary_date=datetime.now())
+
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text=str(report))
+                                 text='Отчет успешно отправлен')
+    await query.answer()

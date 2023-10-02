@@ -5,4 +5,4 @@ from dataclasses import dataclass
 class Food:
     id: int
     name: str
-    category_id: int
+    category_id: int | None = None
