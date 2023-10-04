@@ -37,7 +37,10 @@ async def save_user_report(user: User, diary_date: datetime) -> None:
     diary = []
     for entry in entries:
         food_details = fatsecret_client.get_food_details(entry['food_id'])
-        serving = next(filter(lambda s: s['serving_id'] == entry['serving_id'], food_details['servings']['serving']))
+        if isinstance(food_details['servings']['serving'], list):
+            serving = next(filter(lambda s: s['serving_id'] == entry['serving_id'], food_details['servings']['serving']))
+        else:
+            serving = food_details['servings']['serving']
         if serving['measurement_description'] != 'g':
             food_grams = float(serving['metric_serving_amount']) * float(entry['number_of_units'])
         else:
