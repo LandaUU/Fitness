@@ -163,3 +163,5 @@ cython_debug/
 
 # Project ignore list
 bot/scripts
+# Project web
+web/node_modules

@@ -13,5 +13,5 @@ async def callback_router(query: CallbackQuery, callback_data: CallbackData, sta
     await query.bot.send_message(chat_id=query.message.chat.id,
                                  text='Ваш отчёт за сегодня:',
                                  reply_markup=InlineKeyboardMarkup(inline_keyboard=[[
-                                     InlineKeyboardButton(web_app=WebAppInfo(url='https://google.com'),
+                                     InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/dashboard'),
                                                           text='Открыть отчёт')]]))

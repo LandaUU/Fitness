@@ -2,7 +2,7 @@ from aiogram import Dispatcher
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bot.create_bot import bot
 from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
