@@ -1,0 +1,21 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.calories-info {
+  margin-bottom: $spacing-03;
+  padding: $spacing-02;
+  background: $layer-01;
+}
+
+.calories-percent {
+    display: flex;
+    justify-content: center;
+}
+
+// .calories-remained {
+//     font-size: 1rem;
+// }
+
+// .calories-eaten {
+//     font-size: 1rem;
+// }

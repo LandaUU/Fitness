@@ -1,0 +1,16 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.single-measure-card-layer {
+  padding: $spacing-03;
+  background: $layer-01;
+  height: 100%;
+}
+
+.single-measure-card {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 100%;
+}

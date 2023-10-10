@@ -1,39 +1,41 @@
 import { useLoaderData } from "react-router-dom";
 import { Accordion, AccordionItem, Grid, Column } from "@carbon/react";
 import { useEffect } from "react";
-import { Restaurant } from "@carbon/icons-react";
+import { IceVision, Restaurant, ShapeJoin } from "@carbon/icons-react";
+import SingleMeasureCard from "../SingleMeasureCard";
+import CaloriesInfo from "../CaloriesInfo";
+import FoodDiaryAccordeion from "../FoodDiaryAccordeon/FoodDiaryAccordeon";
 
 const Dashboard = () => {
   const food = useLoaderData();
 
-  const meal_names = [...new Set(food.map((element) => element.meal_name))];
-
   useEffect(() => {}, []);
 
+  console.log(food);
+
   return (
-    <Grid fullWidth>
-      <Column lg={16} md={8} sm={4}>
-        <Accordion>
-          {meal_names.map((meal) => {
-            let my_food = food.filter((f) => f.meal_name == meal);
-            return (
-              <AccordionItem
-                title={
-                  <span>
-                    <Restaurant />
-                    <text>{meal}</text>
-                  </span>
-                }
-                key={meal}
-              >
-                {my_food.map((element) => {
-                  return <div key={element.id}>{element.food_name}</div>;
-                })}
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
+    <Grid>
+      <Column lg={4} sm={4} md={4}>
+        <CaloriesInfo
+          userCaloriesNorm={3500}
+          caloriesEated={food?.summary?.calories || 0}
+        />
       </Column>
+      <Column md={2} sm={2} lg={4} className="user-weight-column">
+        <SingleMeasureCard Icon={IceVision} name={"Вес"} value={food.weight} />
+      </Column>
+      <Column md={2} sm={2} lg={4} className="user-steps-column">
+        <SingleMeasureCard Icon={ShapeJoin} name={"Шаги"} value={food.steps} />
+      </Column>
+      {Object.keys(food.food).map((key) => {
+        if (key !== "summary") {
+          return (
+            <Column md={8} sm={4} key={key} className={'food-diary-accordion-column'}>
+              <FoodDiaryAccordeion food={food.food[key]} mealName={key} className="food-diary-accordeon"/>
+            </Column>
+          );
+        }
+      })}
     </Grid>
   );
 };

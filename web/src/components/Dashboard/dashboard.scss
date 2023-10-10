@@ -1,3 +1,12 @@
-.dashboard-label {
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use "../SingleMeasureCard/single_measure_card";
+@use "../CaloriesInfo/calories_info";
+
+#dashboard-label {
   padding-top: 24 px;
+}
+
+.food-diary-accordion-column {
+  margin-top: $spacing-03;
 }

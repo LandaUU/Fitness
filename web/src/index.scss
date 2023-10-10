@@ -1,6 +1,8 @@
-@use "@carbon/react";
+@use '@carbon/react';
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
 
-
-// body {
-//     background-color: var(--tg-theme-bg-color);
-// }
+body {
+    // background-color: var(--tg-theme-bg-color);
+    background: $background;
+}

@@ -2,6 +2,28 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import "./App.scss";
 
+function groupByMealName(foodData) {
+  // Создаем пустой словарь.
+  const groupedFoodData = {};
+
+  // Проходим по всем элементам массива foodData.
+  for (const food of foodData) {
+    // Получаем значение meal_name для текущего элемента.
+    const mealName = food.meal_name;
+
+    // Если значение meal_name еще не существует в словаре, создаем новое значение.
+    if (!groupedFoodData[mealName]) {
+      groupedFoodData[mealName] = [];
+    }
+
+    // Добавляем текущий элемент в список для этого значения meal_name.
+    groupedFoodData[mealName].push(food);
+  }
+
+  // Возвращаем словарь.
+  return groupedFoodData;
+}
+
 const App = createBrowserRouter([
   {
     path: "/",
@@ -11,7 +33,7 @@ const App = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />,
     loader: async () => {
-      return [
+      let food_data = [
         {
           id: 5,
           user_id: 1,
@@ -181,6 +203,30 @@ const App = createBrowserRouter([
           carbohydrate: 18.86,
         },
       ];
+
+      let result = { food: groupByMealName(food_data) };
+      let calories = 0;
+      let fat = 0;
+      let carbohydrate = 0;
+      let protein = 0;
+      food_data.forEach((food) => {
+        calories += food.calories;
+        fat += food.fat;
+        carbohydrate += food.carbohydrate;
+        protein += food.protein;
+      });
+
+      result.food.summary = {
+        calories: calories,
+        fat: fat,
+        carbohydrate: carbohydrate,
+        protein: protein,
+      };
+
+      result.weight = 100.1;
+      result.steps = 15000;
+
+      return result;
     },
   },
 ]);
