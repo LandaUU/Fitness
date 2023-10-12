@@ -1,0 +1,8 @@
+@use "Title/title";
+@use "Item/item";
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/theme" as *;
+
+.food-diary-accordion {
+    background: $layer-01;
+}

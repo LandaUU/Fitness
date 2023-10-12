@@ -1,7 +1,9 @@
-@use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/theme' as *;
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/theme" as *;
 @use "../SingleMeasureCard/single_measure_card";
 @use "../CaloriesInfo/calories_info";
+@use "../FoodDiaryAccordion/food_diary_accordion";
+@use "../NutrientsPie/nutriens_pie";
 
 #dashboard-label {
   padding-top: 24 px;
