@@ -1,6 +1,11 @@
-@use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/theme' as *;
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/theme" as *;
 
 .food-diary-acc-title-secondary-info {
-    padding-right: $spacing-04;
+  padding-right: $spacing-04;
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.title-meal-name {
+  color: var(--tg-theme-text-color, $text-primary);
 }

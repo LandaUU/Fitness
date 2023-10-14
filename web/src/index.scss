@@ -1,8 +1,32 @@
-@use '@carbon/react';
-@use '@carbon/react/scss/breakpoint' as *;
-@use '@carbon/react/scss/theme' as *;
+@use "@carbon/react";
+@use "@carbon/react/scss/breakpoint" as *;
+@use "@carbon/react/scss/theme" as *;
 
 body {
-    // background-color: var(--tg-theme-bg-color);
-    background: $background;
+  background: var(--tg-theme-secondary-bg-color, $background);
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--accordion__arrow {
+  fill: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--accordion__item--active .cds--accordion__arrow {
+  fill: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--accordion__heading:hover::before {
+  background: var(--tg-theme-bg-color, $layer-01);
+}
+
+.cds--cc--chart-wrapper text {
+  fill: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--cc--chart-wrapper p {
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--cc--title p.title {
+  color: var(--tg-theme-text-color, $text-primary);
 }

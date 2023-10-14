@@ -4,7 +4,7 @@
 .calories-info {
   margin-bottom: $spacing-03;
   padding: $spacing-02;
-  background: $layer-01;
+  background: var(--tg-theme-bg-color, $layer-01);
 }
 
 .calories-percent {

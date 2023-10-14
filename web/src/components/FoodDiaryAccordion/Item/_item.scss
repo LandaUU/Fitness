@@ -7,11 +7,10 @@
 
 .food-diary-acc-item-container {
   margin-bottom: $spacing-03;
-  background: $layer-02;
+  background: var(--tg-theme-secondary-bg-color, $layer-02);
 }
 
-
 .food-diary-acc-item-row {
-    padding-bottom: $spacing-03;
-    padding-left: $spacing-04;
+  padding-bottom: $spacing-03;
+  padding-left: $spacing-04;
 }

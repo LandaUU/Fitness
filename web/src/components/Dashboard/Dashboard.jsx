@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
-import { Accordion, AccordionItem, Grid, Column } from "@carbon/react";
+import { Grid, Column } from "@carbon/react";
 import { useEffect } from "react";
-import { IceVision, Restaurant, ShapeJoin } from "@carbon/icons-react";
+import { IceVision, ShapeJoin } from "@carbon/icons-react";
 import SingleMeasureCard from "../SingleMeasureCard";
 import CaloriesInfo from "../CaloriesInfo";
 import FoodDiaryAccordion from "../FoodDiaryAccordion/FoodDiaryAccordion";
@@ -12,11 +12,8 @@ const Dashboard = () => {
 
   useEffect(() => {}, []);
 
-  console.log(food);
-  console.log(food.food?.summary?.calories);
-
   return (
-    <Grid>
+    <Grid className="dashboard-grid">
       <Column lg={4} sm={4} md={4}>
         <CaloriesInfo
           userCaloriesNorm={6500}

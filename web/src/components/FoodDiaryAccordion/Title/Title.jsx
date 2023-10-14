@@ -12,14 +12,22 @@ const Title = ({ mealName, food }) => {
   return (
     <>
       <div>
-        <h3>{mealName}</h3>
-        {sumOfCalories} калорий
+        <h3 className="title-meal-name">{mealName}</h3>
+        <span className={"food-diary-acc-title-secondary-info"}>
+          {sumOfCalories} калорий
+        </span>
       </div>
-      <hr/>
+      <hr />
       <div>
-        <span className={'food-diary-acc-title-secondary-info'}>{sumOfProtein.toFixed(2)} белки</span>
-        <span className={'food-diary-acc-title-secondary-info'}>{sumOfFat.toFixed(2)} жиры</span>
-        <span className={'food-diary-acc-title-secondary-info'}>{sumOfCarbohydrate.toFixed(2)} углеводы</span>
+        <span className={"food-diary-acc-title-secondary-info"}>
+          {sumOfProtein.toFixed(2)} белки
+        </span>
+        <span className={"food-diary-acc-title-secondary-info"}>
+          {sumOfFat.toFixed(2)} жиры
+        </span>
+        <span className={"food-diary-acc-title-secondary-info"}>
+          {sumOfCarbohydrate.toFixed(2)} углеводы
+        </span>
       </div>
     </>
   );

@@ -3,7 +3,7 @@
 
 .single-measure-card-layer {
   padding: $spacing-03;
-  background: $layer-01;
+  background: var(--tg-theme-bg-color, $layer-01);
   height: 100%;
 }
 
