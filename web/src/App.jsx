@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import "./App.scss";
+import DatePickerPage from "./content/DatePickerPage";
 
 function groupByMealName(foodData) {
   // Создаем пустой словарь.
@@ -28,6 +29,10 @@ const App = createBrowserRouter([
   {
     path: "/",
     element: <div>Корень!</div>,
+  },
+  {
+    path: "/date_picker",
+    element: <DatePickerPage />,
   },
   {
     path: "/dashboard",

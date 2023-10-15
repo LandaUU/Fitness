@@ -2,9 +2,21 @@
 @use "@carbon/react/scss/breakpoint" as *;
 @use "@carbon/react/scss/theme" as *;
 
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   background: var(--tg-theme-secondary-bg-color, $background);
   color: var(--tg-theme-text-color, $text-primary);
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
 }
 
 .cds--accordion__arrow {
@@ -29,4 +41,16 @@ body {
 
 .cds--cc--title p.title {
   color: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--form-item {
+  align-items: center;
+}
+
+.flatpickr-calendar.animate.open {
+  background: var(--tg-theme-secondary-bg-color, $background);
+}
+
+.numInputWrapper .numInput {
+  background: var(--tg-theme-secondary-bg-color, $background);
 }

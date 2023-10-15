@@ -1,0 +1,13 @@
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/theme" as *;
+
+.date-picker-report {
+    // background: var(--tg-theme-bg-color, $layer-01);
+    color: var(--tg-theme-text-color, $text-primary);
+}
+
+.date-picker-input-report {
+    // background: var(--tg-theme-bg-color, $layer-01);
+    color: var(--tg-theme-text-color, $text-primary);
+    fill: var(--tg-theme-text-color, $text-primary);
+}

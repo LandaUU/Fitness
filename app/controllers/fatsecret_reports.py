@@ -38,7 +38,8 @@ async def save_user_report(user: User, diary_date: datetime) -> None:
     for entry in entries:
         food_details = fatsecret_client.get_food_details(entry['food_id'])
         if isinstance(food_details['servings']['serving'], list):
-            serving = next(filter(lambda s: s['serving_id'] == entry['serving_id'], food_details['servings']['serving']))
+            serving = next(filter(lambda s: s['serving_id'] == entry['serving_id'],
+                           food_details['servings']['serving']))
         else:
             serving = food_details['servings']['serving']
         if serving['measurement_description'] != 'g':
@@ -65,5 +66,3 @@ async def save_user_report(user: User, diary_date: datetime) -> None:
 
     diary_repository = FoodDiaryRepository(session=async_session)
     await diary_repository.save_all(diary)
-    # for d in diary:
-    #     await diary_repository.save(d)
