@@ -160,6 +160,7 @@ cython_debug/
 .idea/
 
 .vscode
+.fleet
 
 # Project ignore list
 bot/scripts

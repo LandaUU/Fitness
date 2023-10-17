@@ -43,14 +43,37 @@ body {
   color: var(--tg-theme-text-color, $text-primary);
 }
 
-.cds--form-item {
-  align-items: center;
-}
+// .cds--form-item {
+//   align-items: center;
+// }
 
 .flatpickr-calendar.animate.open {
   background: var(--tg-theme-secondary-bg-color, $background);
+  color: var(--tg-theme-text-color, $text-primary);
 }
 
 .numInputWrapper .numInput {
   background: var(--tg-theme-secondary-bg-color, $background);
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--label {
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.flatpickr-day {
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+  fill: var(--tg-theme-text-color, $text-primary);
+}
+
+.flatpickr-month {
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.flatpickr-weekday {
+  color: var(--tg-theme-text-color, $text-primary);
 }
