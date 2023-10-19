@@ -1,7 +1,9 @@
 from datetime import datetime, date
 
 from aiogram import Router, F
-from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, \
+    ReplyKeyboardMarkup, KeyboardButton, WebAppInfo,  \
+    InlineQueryResultsButton, CallbackQuery, Message
 from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
 
@@ -65,8 +67,29 @@ async def get_food_diary_callback_send(query: CallbackQuery, callback_data: Call
         await query.bot.send_message(chat_id=query.message.chat.id,
                                      text='Вы не зарегистрированы, введите `/start` для начала работы')
 
-    await save_user_report(user=stored_user, diary_date=datetime.now())
+    reply_keyboard = ReplyKeyboardMarkup(one_time_keyboard=True, is_persistent=False, keyboard=[[KeyboardButton(
+        text='Выбрать дату', web_app=WebAppInfo(url='http://127.0.0.1:5173/date_picker'))]])
 
-    await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Отчет успешно отправлен')
     await query.answer()
+    await query.bot.send_message(chat_id=query.message.chat.id, text="Выберите дату для выгрузки отчета",
+                                 reply_markup=reply_keyboard)
+
+
+def check_get_date_step(message: Message) -> bool:
+    return message.web_app_data.button_text == 'Выбрать дату'
+
+
+@fatsecret_router.message(check_get_date_step)
+async def general_message_handler(message: Message):
+    date = message.web_app_data.data
+
+    repository = UserRepository(session=async_session)
+    stored_user = await repository.get_user(lambda user: user.telegram_id == message.from_user.id)
+    if stored_user is None:
+        await message.bot.send_message(chat_id=message.chat.id,
+                                       text='Вы не зарегистрированы, введите `/start` для начала работы')
+
+    await save_user_report(user=stored_user, diary_date=datetime.strptime(date, '%Y-%m-%d'))
+
+    await message.bot.send_message(chat_id=message.chat.id,
+                                   text='Отчет успешно отправлен')

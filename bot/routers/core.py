@@ -51,16 +51,3 @@ async def command_menu_handler(message: Message) -> None:
         [InlineKeyboardButton(text="Открыть отчет за сегодня",
                               callback_data=ReportCallback(action=ReportAction.open_webapp).pack())]])
     await bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=response_keyboard)
-
-
-@dp.message(Command("date"))
-async def command_get_date(message: Message) -> None:
-    reply_keyboard = ReplyKeyboardMarkup(one_time_keyboard=True, is_persistent=False, keyboard=[[KeyboardButton(
-        text='Выбрать дату', web_app=WebAppInfo(url='http://127.0.0.1:5173/date_picker'))]])
-
-    await bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=reply_keyboard)
-
-
-@dp.message()
-async def get_data(message: Message):
-    print(message.web_app_data.data)
