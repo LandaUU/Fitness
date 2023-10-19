@@ -9,6 +9,10 @@ class User:
     height: float
     age: int
     gender: str
+    physical_level: int
+    sickness: str
+    losing_weight_level: int
+    losing_weight_in_half_year_level: int
     id: Optional[int] = None
     lastname: Optional[str] = None
     middlename: Optional[str] = None
