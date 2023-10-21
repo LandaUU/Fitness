@@ -76,7 +76,7 @@ async def get_food_diary_callback_send(query: CallbackQuery, callback_data: Call
 
 
 def check_get_date_step(message: Message) -> bool:
-    return message.web_app_data.button_text == 'Выбрать дату'
+    return message.web_app_data and message.web_app_data.button_text == 'Выбрать дату'
 
 
 @fatsecret_router.message(check_get_date_step)
