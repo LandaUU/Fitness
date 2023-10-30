@@ -6,6 +6,7 @@ from bot.routers.measurements.router import measure_router
 from bot.routers.fatsecret_reports.router import fatsecret_router
 from bot.routers.user.router import user_router
 from bot.routers.reports.router import reports
+from bot.routers.admin.router import admin_router
 
 
 def register_routers():
@@ -15,3 +16,4 @@ def register_routers():
     dp.include_router(fatsecret_router)
     dp.include_router(user_router)
     dp.include_router(reports)
+    dp.include_router(admin_router)

@@ -26,3 +26,4 @@ class User:
     oauth_token: Optional[str] = None
     oauth_secret: Optional[str] = None
     oauth_date: Optional[date] = None
+    admin: Optional[bool] = False

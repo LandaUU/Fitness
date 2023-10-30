@@ -3,7 +3,6 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from bot.create_bot import bot
 from bot.routers.weight.callback import WeightCallback
 from bot.routers.steps.callback import StepsCallback
 from bot.routers.measurements.callback import MeasureCallback
@@ -49,4 +48,4 @@ async def command_menu_handler(message: Message) -> None:
                               callback_data=FatSecretLoadFoodDiary(action=FatSecretLoadFoodDiaryAction.send).pack())],
         [InlineKeyboardButton(text="Открыть отчет за сегодня",
                               callback_data=ReportCallback(action=ReportAction.open_webapp).pack())]])
-    await bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=response_keyboard)
+    await message.bot.send_message(chat_id=message.chat.id, text="Меню:", reply_markup=response_keyboard)

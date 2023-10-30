@@ -1,5 +1,5 @@
 from sqlalchemy import Column
-from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE, BIGINT
+from sqlalchemy.dialects.postgresql import VARCHAR, REAL, INTEGER, DATE, BIGINT, BOOLEAN
 from sqlalchemy import Table
 from app.core.models.user import User
 from app.db.sqlalchemy.base import metadata_obj, mapper_registry
@@ -28,6 +28,7 @@ user = Table(
     Column("oauth_token", VARCHAR),
     Column("oauth_secret", VARCHAR),
     Column("oauth_date", DATE),
+    Column("admin", BOOLEAN),
 )
 
 mapper_registry.map_imperatively(
