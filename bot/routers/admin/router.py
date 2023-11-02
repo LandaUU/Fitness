@@ -48,46 +48,46 @@ async def configure_jobs(query: CallbackQuery, callback_data: CallbackData, stat
 @admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.request_food_diary))
 async def request_food_diary(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/'),
-                             text='Открыть отчёт')]])
+        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/user_picker'),
+                             text='Выбрать пользователя')]])
 
     await query.answer(text='Выберите из списка пользователей того, чей пищевой отчет хотите запросить:')
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Выбор пользователя:',
+                                 text='Кнопка',
                                  reply_markup=response_keyboard)
 
 
 @admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.request_measurement))
 async def request_measurement(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/'),
-                             text='Открыть отчёт')]])
+        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/user_picker'),
+                             text='Выбрать пользователя')]])
 
     await query.answer(text='Выберите из списка пользователей того, чьи замеры хотите запросить:')
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Выбор пользователя:',
+                                 text='Кнопка',
                                  reply_markup=response_keyboard)
 
 
 @admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.view_food_diary))
 async def view_food_diary(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/'),
-                             text='Открыть отчёт')]])
+        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/user_picker'),
+                             text='Выбрать пользователя')]])
 
     await query.answer(text='Выберите из списка пользователей того, чей отчет хотите посмотреть:')
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Выбор пользователя:',
+                                 text='Кнопка',
                                  reply_markup=response_keyboard)
 
 
 @admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.view_measurement))
 async def view_measurement(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     response_keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/'),
-                             text='Открыть отчёт')]])
+        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/user_picker'),
+                             text='Выбрать пользователя')]])
 
     await query.answer(text='Выберите из списка пользователей того, чьи замеры хотите посмотреть:')
     await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Выбор пользователя:',
+                                 text='Кнопка',
                                  reply_markup=response_keyboard)

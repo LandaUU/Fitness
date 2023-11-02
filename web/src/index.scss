@@ -19,6 +19,16 @@ body {
   height: 100%;
 }
 
+.cds--list-box input[role="combobox"],
+.cds--list-box input[type="text"] {
+  background: var(--tg-theme-bg-color, $layer-01);
+  color: var(--tg-theme-text-color, $text-primary);
+}
+
+.cds--list-box__menu-item {
+  background: var(--tg-theme-bg-color, $layer-01);
+}
+
 .cds--accordion__arrow {
   fill: var(--tg-theme-text-color, $text-primary);
 }
@@ -42,10 +52,6 @@ body {
 .cds--cc--title p.title {
   color: var(--tg-theme-text-color, $text-primary);
 }
-
-// .cds--form-item {
-//   align-items: center;
-// }
 
 .flatpickr-calendar.animate.open {
   background: var(--tg-theme-secondary-bg-color, $background);
