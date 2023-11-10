@@ -3,29 +3,37 @@ import { Button, ComboBox, Layer } from "@carbon/react";
 
 const UserPickerPage = () => {
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState(null);
+
+  const fetchUsers = async () => {
+    const result = await fetch("http://localhost:8000/users/get", {
+      method: "GET",
+    });
+    return await result.json();
+  };
 
   useEffect(() => {
-    window.Telegram.WebApp.ready();
-    console.log(`initData = ${window.Telegram.WebApp.initData}`);
+    console.log(window.Telegram);
+    fetchUsers().then((result) => {
+      setUsers(result);
+      window.Telegram.WebApp.ready();
+    });
   }, []);
 
   return (
     <Layer className="user-picker-container">
       <div className="user-picker-subcontainer">
         <ComboBox
-          items={[
-            { id: "1", text: "Иванов Иван Иванович" },
-            { id: "2", text: "Сергеев Сергей Сергеевич" },
-            { id: "3", text: "Утюгов Виктор Петрович" },
-          ]}
+          id="user-picker-box"
+          items={users}
           itemToElement={(item) =>
-            item ? <span className="user-picker-item">{item.text}</span> : ""
+            item ? <span className="user-picker-item">{item.name}</span> : ""
           }
           className="user-picker-box"
           label="Select an option..."
           onChange={(item) => setUser(item.selectedItem)}
           selectedItem={user}
-          itemToString={(item) => (item ? item.text : "")}
+          itemToString={(item) => (item ? item.name : "")}
         />
       </div>
       <div className="user-picker-subcontainer">
