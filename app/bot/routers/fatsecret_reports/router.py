@@ -8,9 +8,9 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
 
 from app.db.sqlalchemy.base import async_session
-from bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, FatSecretUserSyncAction, \
+from app.bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, FatSecretUserSyncAction, \
     FatSecretLoadFoodDiary, FatSecretLoadFoodDiaryAction
-from bot.routers.fatsecret_reports.states import FsReportState
+from app.bot.routers.fatsecret_reports.states import FsReportState
 from app.modules.fatsecret.client import fatsecret_client
 from app.db.sqlalchemy.repositories.user_repository import UserRepository
 from app.controllers.fatsecret_reports import save_user_report

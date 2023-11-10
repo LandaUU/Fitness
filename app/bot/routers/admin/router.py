@@ -6,7 +6,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram.filters import Command
 from app.db.sqlalchemy.repositories.user_repository import UserRepository
 
-from bot.routers.admin.callback import AdminAction, AdminCallback
+from app.bot.routers.admin.callback import AdminAction, AdminCallback
 from app.db.sqlalchemy.base import async_session
 
 admin_router = Router(name="admin")

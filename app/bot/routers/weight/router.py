@@ -3,10 +3,10 @@ from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
-from bot.routers.weight.callback import WeightCallback
-from bot.routers.weight.states import WeightState
-from bot.routers.core import command_menu_handler
-from bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
+from app.bot.routers.weight.callback import WeightCallback
+from app.bot.routers.weight.states import WeightState
+from app.bot.routers.core import command_menu_handler
+from app.bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
 from app.controllers.measurement import save_measurements
 
 weight_router = Router(name="weight")

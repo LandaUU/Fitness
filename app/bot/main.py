@@ -2,11 +2,11 @@ import asyncio
 import logging
 import sys
 
-from bot.routers.core import dp
+from app.bot.routers.core import dp
 from app.db.sqlalchemy.base import create_all_tables
 from app.db.sqlalchemy.base import app_engine, mapper_registry
-from bot.create_bot import bot
-from bot.routers.register import register_routers
+from app.bot.create_bot import bot
+from app.bot.routers.register import register_routers
 
 
 async def main() -> None:

@@ -3,13 +3,13 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from bot.routers.weight.callback import WeightCallback
-from bot.routers.steps.callback import StepsCallback
-from bot.routers.measurements.callback import MeasureCallback
-from bot.routers.fatsecret_reports.callback import FatSecretLoadFoodDiary, \
+from app.bot.routers.weight.callback import WeightCallback
+from app.bot.routers.steps.callback import StepsCallback
+from app.bot.routers.measurements.callback import MeasureCallback
+from app.bot.routers.fatsecret_reports.callback import FatSecretLoadFoodDiary, \
     FatSecretLoadFoodDiaryAction
-from bot.routers.user.callback import UserCreateCallback, UserCreateAction
-from bot.routers.reports.callback import ReportAction, ReportCallback
+from app.bot.routers.user.callback import UserCreateCallback, UserCreateAction
+from app.bot.routers.reports.callback import ReportAction, ReportCallback
 
 dp = Dispatcher()
 

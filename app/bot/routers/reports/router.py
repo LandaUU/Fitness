@@ -3,7 +3,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
-from bot.routers.reports.callback import ReportCallback, ReportAction
+from app.bot.routers.reports.callback import ReportCallback, ReportAction
 
 reports = Router(name="app_reports")
 

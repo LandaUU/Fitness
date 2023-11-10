@@ -3,10 +3,10 @@ from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 from aiogram.fsm.context import FSMContext
 from aiogram.filters.callback_data import CallbackData
-from bot.routers.core import command_menu_handler
-from bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
-from bot.routers.measurements.callback import MeasureCallback
-from bot.routers.measurements.state import MeasureState
+from app.bot.routers.core import command_menu_handler
+from app.bot.tools import search_steps_number_in_text, UnexpectedAnswer, NegativeAnswer, NegativeNumber, delay
+from app.bot.routers.measurements.callback import MeasureCallback
+from app.bot.routers.measurements.state import MeasureState
 from app.controllers.measurement import save_measurements
 
 measure_router = Router(name="measure")

@@ -1,4 +1,3 @@
-import os
 from os import getenv
 from aiogram import Bot
 from aiogram.client.session.aiohttp import AiohttpSession

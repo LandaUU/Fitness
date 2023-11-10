@@ -2,10 +2,10 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from bot.routers.user.callback import UserCreateCallback, UserCreateAction
-from bot.routers.user.states import UserState, UserScenarioState
-from bot.tools import search_steps_number_in_text, NegativeNumber, NegativeAnswer, UnexpectedAnswer
-from bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, FatSecretUserSyncAction
+from app.bot.routers.user.callback import UserCreateCallback, UserCreateAction
+from app.bot.routers.user.states import UserState, UserScenarioState
+from app.bot.tools import search_steps_number_in_text, NegativeNumber, NegativeAnswer, UnexpectedAnswer
+from app.bot.routers.fatsecret_reports.callback import FatSecretUserSyncCallback, FatSecretUserSyncAction
 from app.core.models.user import User
 from app.db.sqlalchemy.base import async_session
 from app.db.sqlalchemy.repositories.user_repository import UserRepository
