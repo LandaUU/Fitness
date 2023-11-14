@@ -40,7 +40,7 @@ const UserPickerPage = () => {
         <Button
           className="user-picker-submit"
           onClick={() => {
-            window.Telegram.WebApp.sendData(user);
+            window.Telegram.WebApp.sendData(JSON.stringify(user));
           }}
         >
           Выбрать

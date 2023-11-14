@@ -8,8 +8,10 @@ from app.db.sqlalchemy.repositories.user_repository import UserRepository
 
 from app.bot.routers.admin.callback import AdminAction, AdminCallback
 from app.db.sqlalchemy.base import async_session
+from .request_food_diary import rfd_router
 
 admin_router = Router(name="admin")
+admin_router.include_router(rfd_router)
 
 
 @admin_router.message(Command("admin"))
@@ -43,18 +45,6 @@ async def configure_jobs(query: CallbackQuery, callback_data: CallbackData, stat
 1) запросы по пищевым дневникам отправляются пользователям каждый день в 19 часов
 2) запросы по замерам отправляются каждую субботу в 9 утра''',
                                  chat_id=query.message.chat.id)
-
-
-@admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.request_food_diary))
-async def request_food_diary(query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
-    response_keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(web_app=WebAppInfo(url='http://127.0.0.1:5173/user_picker'),
-                             text='Выбрать пользователя')]])
-
-    await query.answer(text='Выберите из списка пользователей того, чей пищевой отчет хотите запросить:')
-    await query.bot.send_message(chat_id=query.message.chat.id,
-                                 text='Кнопка',
-                                 reply_markup=response_keyboard)
 
 
 @admin_router.callback_query(AdminCallback.filter(F.action == AdminAction.request_measurement))
